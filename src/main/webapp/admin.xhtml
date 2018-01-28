@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Coffee administration</title>
+	<h:outputStylesheet library="css" name="default.css" />
+</h:head>
+<h:body>
+	<h1>What do you want do?</h1>
+	<h:form id="form">
+		<h:selectOneMenu value="${coffeeController.coffeeChoice}">
+			<f:selectItems value="${coffeeController.getEveryCoffee()}" var="coffee"
+				itemLabel="name: ${coffee.name}. Price: ${coffee.price}" itemValue="${coffee.name}" />
+		</h:selectOneMenu>
+		<br/>
+		<h:commandButton value="delete" action="${coffeeController.deleteCoffee()}" />
+		<br/>
+		<h4>Create or update coffee</h4>
+		<h5>(Type the same name as an existing coffee to update its price.)</h5>
+		<p>Coffee name:</p>
+		<h:inputText value="${coffeeController.tempName}"/>
+		<p>Coffee price:</p>
+		<h:inputText value="${coffeeController.tempPrice}"/>
+		<br/>
+		<h:commandButton value="Save coffee" action="${coffeeController.createCoffee()}"/>
+		<br/>
+		<h:outputText>${coffeeController.getCurrentBean().getName()}</h:outputText>
+		<br/>
+		<h:commandButton id="back" value="back to shop" action="shop" />
+	</h:form>
+</h:body>
+</html>

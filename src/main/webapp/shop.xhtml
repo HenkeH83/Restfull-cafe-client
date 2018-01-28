@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Coffee!</title>
+	<h:outputStylesheet library="css" name="default.css" />
+</h:head>
+<h:body>
+	<h1>Welcome to my coffee shop</h1>
+	<h:form id="form">
+		<br />
+
+		<h2>
+			<h:outputText id="result" value="#{coffeeBean.getName()}" />
+		</h2>
+
+
+		<h:dataTable value="${coffeeController.getEveryCoffee()}" var="coffee">
+			<h:column>
+				<f:facet name="header">Meny:</f:facet>
+				${coffee.name}
+			</h:column>
+			<h:column>
+				${coffee.price}
+			</h:column>
+			<h:column>
+				<h:commandButton value="Buy"
+					action="${coffeeController.orderCoffee()}">
+					<f:setPropertyActionListener value="${coffee.name}"
+						target="${coffeeController.coffeeChoice}" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+
+		<br />
+		<h:dataTable value="${orderBean.getOrder()}" var="order">
+			<h:column>
+				<f:facet name="header">Order:</f:facet>
+				${order.name}
+			</h:column>
+			<h:column>
+				${order.price}
+			</h:column>
+		</h:dataTable>
+		<br/>
+		<h4>
+			<h:outputText value="Total: ${orderBean.total}" />
+		</h4>
+	</h:form>
+</h:body>
+</html>

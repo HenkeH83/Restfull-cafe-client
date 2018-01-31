@@ -1,0 +1,25 @@
+.head{
+	display: block;
+	align: center;
+	background-color: grey;
+	text-align: center;
+	color: white;
+	padding:50px;
+	margin:50px;
+}
+
+.mainDiv{
+	display: block;
+	align: center;
+	background-color: white;
+	text-align: center;
+	padding: 50px;
+	margin: 50px;
+}
+
+.btn{
+	margin:5px;
+	padding:5px;
+	background-color: gray;
+	color: white;
+}

@@ -1,7 +1,6 @@
 package com.cafe.controllers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -18,9 +17,8 @@ import com.cafe.beans.OrderBean;
 public class CoffeeController implements Serializable{
 	private static final long serialVersionUID = -1899230453312620402L;
 	
-	private String coffeeChoice;
-	private String tempName;
-	private long tempPrice;
+	private String coffeeChoiceName;
+	private long coffeeChoicePrice;
 	private List<CoffeeBean> everyCoffee;
 	private CoffeeBean currentBean;
 	
@@ -35,32 +33,21 @@ public class CoffeeController implements Serializable{
 		getEveryCoffee();
 	}
 	
-	public void orderCoffee() {
-		order.setOrder(getCoffee(coffeeChoice));
+	
+	public void setCoffeeChoiceName(String coffeeChoiceName) {
+		this.coffeeChoiceName = coffeeChoiceName;
 	}
 	
-	public void setCoffeeChoice(String coffeeChoice) {
-		this.coffeeChoice = coffeeChoice;
+	public void setCoffeeChoicePrice(long coffeeChoicePrice) {
+		this.coffeeChoicePrice = coffeeChoicePrice;
 	}
 	
-	public void setTempName(String tempName) {
-		this.tempName = tempName;
+	public String getCoffeeChoiceName() {
+		return coffeeChoiceName;
 	}
 	
-	public void setTempPrice(long tempPrice) {
-		this.tempPrice = tempPrice;
-	}
-	
-	public String getCoffeeChoice() {
-		return coffeeChoice;
-	}
-	
-	public String getTempName() {
-		return tempName;
-	}
-	
-	public long getTempPrice() {
-		return tempPrice;
+	public long getCoffeeChoicePrice() {
+		return coffeeChoicePrice;
 	}
 	
 	public void setCurrentBean(CoffeeBean bean) {
@@ -74,41 +61,44 @@ public class CoffeeController implements Serializable{
 	public void setEveryCoffee() {
 		this.everyCoffee = coffeeClient.getCoffees();
 	}
-	
+
 	public List<CoffeeBean> getEveryCoffee(){
 		return everyCoffee;
 	}
-
-	//Detta är helt och hållet mitt fel, jag var lat när jag gjorde databasen 
-	//och har inte lagt till "id" med auto increment (som alla databaser någonsin alltid har)så nu får jag loopa igenom efter namn :S
-	// Vet att jag ganska enkelt kan uppdatera databasen, 
-	//men då måste jag in och skriva om servern och jag känner inte att jag hinner det just nu....
-	public CoffeeBean findCoffeeByName(String name) {
-		for(CoffeeBean bean : everyCoffee) {
-			if(bean.getName().equals(name));
-			return bean;
-		}
-		return null;
+	
+	public void orderCoffee() {
+		order.setOrder(getCoffee(coffeeChoiceName));
+	}
+	
+	public void purchase() {
+		/* Här skickas massa info till en fet bockförings backend så ägarna kan se hur mycket de tjänat 
+		 * Men vi nöjer oss med att att bara rensa listen just nu.*/
+		order.executeOrder66();
+	}
+	
+	public void removeCoffeeFromOrder() {
+		order.removeFromOrder(coffeeChoiceName);
 	}
 	
 	// CRUD methods below.
 	
 	public void createCoffee() {
-		CoffeeBean newCoffee = new CoffeeBean(tempName,tempPrice); 
+		CoffeeBean newCoffee = new CoffeeBean(coffeeChoiceName,coffeeChoicePrice); 
 		setCurrentBean(coffeeClient.createCoffee(newCoffee));
+		coffeeChoiceName = "";
+		coffeeChoicePrice = 0;
 		init();
 	}
+	
 
 	public CoffeeBean getCoffee(String name) {
 		return coffeeClient.getCoffee(name);
 	}
 	
-	//Möjligtvis en update metod
-	
 	public void deleteCoffee() {
-//		setCurrentBean(findCoffeeByName(coffeeChoice));
-//		coffeeClient.deleteCoffee(currentBean);
-		coffeeClient.deleteCoffee(coffeeChoice);
+		coffeeClient.deleteCoffee(coffeeChoiceName);
+		coffeeChoiceName = "";
+		coffeeChoicePrice = 0;
 		init();
 	}
 	

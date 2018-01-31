@@ -9,46 +9,61 @@
 	<h:outputStylesheet library="css" name="default.css" />
 </h:head>
 <h:body>
-	<h1>Welcome to my coffee shop</h1>
-	<h:form id="form">
-		<br />
-
-		<h2>
-			<h:outputText id="result" value="#{coffeeBean.getName()}" />
-		</h2>
-
-
-		<h:dataTable value="${coffeeController.getEveryCoffee()}" var="coffee">
-			<h:column>
-				<f:facet name="header">Meny:</f:facet>
+	<h:form>
+		<h:commandButton class="btn" value="Log out"
+			action="${backingBean.logout()}" />
+	</h:form>
+	<h:panelGroup class="head">
+		<h1>Coffee shop</h1>
+	</h:panelGroup>
+	<h:panelGroup class="mainDiv">
+		<h:form>
+			<br />
+			<h:dataTable value="${coffeeController.getEveryCoffee()}"
+				var="coffee">
+				<h:column>
+					<f:facet name="header">Meny:</f:facet>
 				${coffee.name}
 			</h:column>
-			<h:column>
+				<h:column>
 				${coffee.price}
 			</h:column>
-			<h:column>
-				<h:commandButton value="Buy"
-					action="${coffeeController.orderCoffee()}">
-					<f:setPropertyActionListener value="${coffee.name}"
-						target="${coffeeController.coffeeChoice}" />
-				</h:commandButton>
-			</h:column>
-		</h:dataTable>
-
-		<br />
-		<h:dataTable value="${orderBean.getOrder()}" var="order">
-			<h:column>
-				<f:facet name="header">Order:</f:facet>
+				<h:column>
+					<h:commandButton class="btn" value="Buy"
+						action="${coffeeController.orderCoffee()}">
+						<f:setPropertyActionListener value="${coffee.name}"
+							target="${coffeeController.coffeeChoiceName}" />
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+			<br />
+			<h:dataTable value="${orderBean.getOrder()}" var="order">
+				<h:column>
+					<f:facet name="header">Order:</f:facet>
 				${order.name}
 			</h:column>
-			<h:column>
+				<h:column>
 				${order.price}
 			</h:column>
-		</h:dataTable>
-		<br/>
-		<h4>
-			<h:outputText value="Total: ${orderBean.total}" />
-		</h4>
-	</h:form>
+				<h:column>
+					<h:commandButton class="btn" value="remove"
+						action="${coffeeController.removeCoffeeFromOrder()}">
+						<f:setPropertyActionListener value="${order.name}"
+							target="${coffeeController.coffeeChoiceName}" />
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+			<br />
+			<h4>
+				<h:outputText value="Total: ${orderBean.total}" />
+			</h4>
+			<br />
+			<h:commandButton class="btn" value="Purchase order."
+				action="${coffeeController.purchase()}" />
+			<br />
+			<h:commandButton class="btn" value="Back to the index page"
+				action="index" />
+		</h:form>
+	</h:panelGroup>
 </h:body>
 </html>

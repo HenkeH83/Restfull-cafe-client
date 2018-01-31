@@ -10,27 +10,61 @@
 	<h:outputStylesheet library="css" name="default.css" />
 </h:head>
 <h:body>
-	<h1>What do you want do?</h1>
-	<h:form id="form">
-		<h:selectOneMenu value="${coffeeController.coffeeChoice}">
-			<f:selectItems value="${coffeeController.getEveryCoffee()}" var="coffee"
-				itemLabel="name: ${coffee.name}. Price: ${coffee.price}" itemValue="${coffee.name}" />
-		</h:selectOneMenu>
-		<br/>
-		<h:commandButton value="delete" action="${coffeeController.deleteCoffee()}" />
-		<br/>
-		<h4>Create or update coffee</h4>
-		<h5>(Type the same name as an existing coffee to update its price.)</h5>
-		<p>Coffee name:</p>
-		<h:inputText value="${coffeeController.tempName}"/>
-		<p>Coffee price:</p>
-		<h:inputText value="${coffeeController.tempPrice}"/>
-		<br/>
-		<h:commandButton value="Save coffee" action="${coffeeController.createCoffee()}"/>
-		<br/>
-		<h:outputText>${coffeeController.getCurrentBean().getName()}</h:outputText>
-		<br/>
-		<h:commandButton id="back" value="back to shop" action="shop" />
+	<h:form>
+		<h:commandButton class="btn" value="Log out"
+			action="${backingBean.logout()}" />
 	</h:form>
+	<h:panelGroup class="head">
+		<h1>What do you want do?</h1>
+	</h:panelGroup>
+	
+	<h:panelGroup class="mainDiv">
+		<h:form>
+			<h2>Create coffee</h2>
+			<p>Coffee name:</p>
+			<h:inputText value="${coffeeController.coffeeChoiceName}" />
+			<p>Coffee price:</p>
+			<h:inputText value="${coffeeController.coffeeChoicePrice}" />
+			<br />
+			<h:commandButton class="btn" value="Save coffee"
+				rendered="#{request.isUserInRole('admin')}"
+				action="${coffeeController.createCoffee()}" />
+		</h:form>
+		<br />
+		<h:form>
+			<h2>Update Coffee</h2>
+			<h:selectOneMenu value="${coffeeController.coffeeChoiceName}">
+				<f:selectItems value="${coffeeController.getEveryCoffee()}"
+					var="coffee"
+					itemLabel="name: ${coffee.name}. Price: ${coffee.price}"
+					itemValue="${coffee.name}" />
+			</h:selectOneMenu>
+			<br />
+			<p>New coffee price:</p>
+			<h:inputText value="${coffeeController.coffeeChoicePrice}" />
+			<br />
+			<h:commandButton class="btn" value="Update"
+				rendered="#{request.isUserInRole('admin')}"
+				action="${coffeeController.createCoffee()}" />
+		</h:form>
+		<br />
+		<h:form>
+			<h2>Delete Coffee</h2>
+			<h:selectOneMenu value="${coffeeController.coffeeChoiceName}">
+				<f:selectItems value="${coffeeController.getEveryCoffee()}"
+					var="coffee"
+					itemLabel="name: ${coffee.name}. Price: ${coffee.price}"
+					itemValue="${coffee.name}" />
+			</h:selectOneMenu>
+			<br />
+			<h:commandButton class="btn" value="delete"
+				rendered="#{request.isUserInRole('admin')}"
+				action="${coffeeController.deleteCoffee()}" />
+			<br />
+		</h:form>
+		<h:form>
+			<h:commandButton class="btn" value="back to index" action="index" />
+		</h:form>
+	</h:panelGroup>
 </h:body>
 </html>

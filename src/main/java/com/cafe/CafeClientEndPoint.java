@@ -4,16 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.cafe.beans.CoffeeBean;
 
@@ -39,8 +35,6 @@ public class CafeClientEndPoint implements Serializable {
 
 	public void deleteCoffee(String name) {
 		delete.path("{name}").resolveTemplate("name", name).request(MediaType.APPLICATION_XML).delete();
-
-//		delete.request(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).delete(bean.getClass());
 	}
 
 	public List<CoffeeBean> getCoffees() {

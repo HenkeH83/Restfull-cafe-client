@@ -1,3 +1,6 @@
 # Restfull-cafe-client
 
-School project. Client to "Restfull cafe server" project. 
+School project. Webclient to "Restfull cafe server" project. 
+
+#### Technologies
+J2EE, JSF.

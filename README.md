@@ -1,3 +1,3 @@
-# cafe-client
+# Restfull-cafe-client
 
-School project.
+School project. Client to "Restfull cafe server" project. 
